@@ -9,15 +9,16 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BookDataLoader implements CommandLineRunner {
+public class BookDataLoader /*implements CommandLineRunner*/ {  //TOGLI COMMENTO PER CARICARE I LIBRI QUI SOTTO ALL'AVVIO
 
     private final VectorStore vectorStore;
 
     public BookDataLoader(VectorStore vectorStore) {
         this.vectorStore = vectorStore;
     }
-
-    @Override
+ //################################################################################################
+   // @Override    //TOGLI COMMENTO PER CARICARE I LIBRI QUI SOTTO ALL'AVVIO
+ //################################################################################################
     public void run(String... args) throws Exception {
         // Controlla se ci sono già dati
         try {
