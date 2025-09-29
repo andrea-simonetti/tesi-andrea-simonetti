@@ -23,25 +23,13 @@ public class BookSearchController {
 
     @PostMapping("/search")
     public List<String> semanticSearch(@RequestBody String query) {
-        return vectorStore.similaritySearch(SearchRequest.query(query).withTopK(2))
-                .stream()
-                .map(Document::getContent)
-                .toList();
+        return estrai(vectorStore.similaritySearch(SearchRequest.query(query).withTopK(2)));
     }
 
     /* momentaneamente non funzionante
     @PostMapping("/enhanced-search")
     public String enhancedSearch(@RequestBody String query) {
-        String context = vectorStore.similaritySearch(SearchRequest.query(query).withTopK(3))
-                .stream()
-                .map(Document::getContent)
-                .reduce("", (a, b) -> a + b + "\n");
 
-        return chatClient.prompt()
-                .system(context)
-                .user(query)
-                .call()
-                .content();
     } */
 
     // endpoint CRUD
@@ -58,10 +46,8 @@ public class BookSearchController {
 
     @GetMapping("/all")
     public List<String> getAllBooks() {
-        return vectorStore.similaritySearch(SearchRequest.query("").withTopK(100))
-                .stream()
-                .map(Document::getContent)
-                .toList();
+        return estrai(vectorStore.similaritySearch(SearchRequest.query("").withTopK(100)));
+
     }
 
     @DeleteMapping("/by-author/{author}")
@@ -85,11 +71,17 @@ public class BookSearchController {
     @PostMapping("/search-by-author")
     public List<String> searchByAuthor(@RequestBody String query, @RequestParam String author) {
         SearchRequest request = SearchRequest.query(query)
-                .withTopK(5)
-                .withFilterExpression("author == '" + author + "'");
+                .withTopK(100);
 
         return vectorStore.similaritySearch(request)
                 .stream()
+                .filter(doc -> doc.getContent().contains("author=" + author))
+                .map(Document::getContent)
+                .toList();
+    }
+
+    private List<String> estrai(List<Document> documents) {
+        return documents.stream()
                 .map(Document::getContent)
                 .toList();
     }
