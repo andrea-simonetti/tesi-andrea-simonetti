@@ -22,3 +22,21 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+
+otel:
+  sdk:
+    disabled: false
+  exporter:
+    otlp:
+      endpoint: https://cloud.langfuse.com/api/public/otel
+      headers:
+        authorization: Basic cGstbGYtOWZkYTIwZDgtYjg3ZC00YTYyLWE2MGEtMTU2Yzc4OTYyYjAwOnNrLWxmLTFhMWJiNzBkLTU2YzYtNDg1Yy04ZDcxLWNmNjA3ZGMzZWJhOQ==
+  logs:
+    exporter: none
+  metrics:
+    exporter: none
+  traces:
+    exporter: otlp
+  service:
+    name: vector-search-app

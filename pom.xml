@@ -82,6 +82,17 @@
 			<version>2.2.0</version>
 		</dependency>
 
+		<!-- OpenTelemetry -->
+		<dependency>
+			<groupId>io.opentelemetry.instrumentation</groupId>
+			<artifactId>opentelemetry-spring-boot-starter</artifactId>
+		</dependency>
+
+		<!-- OTLP Exporter -->
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-otlp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -90,6 +101,14 @@
 				<groupId>org.springframework.ai</groupId>
 				<artifactId>spring-ai-bom</artifactId>
 				<version>${spring-ai.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>io.opentelemetry.instrumentation</groupId>
+				<artifactId>opentelemetry-instrumentation-bom</artifactId>
+				<version>2.10.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
